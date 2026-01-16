@@ -3,7 +3,7 @@ const app = express();
 require("dotenv").config();
 
 
-const PORT_VALUE = process.env.PORT_VALUE || 4000;
+const PORT = process.env.PORT || 4000;
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -18,6 +18,6 @@ app.get("/login", (req, res) => {
 });
 
 
-app.listen(PORT_VALUE, "0.0.0.0", () => {
-  console.log(`App Listening on port: ${PORT_VALUE}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`App Listening on port: ${PORT}`);
 });
