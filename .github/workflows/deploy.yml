@@ -1,0 +1,49 @@
+name: Backend deployment to ec2
+
+on:
+  push:
+    branches:
+      - ci-cd-demo
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies 
+        run: npm install
+
+
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+
+            mkdir -p /var/www/backend
+            cd /var/www/backend
+
+            # Clone the repo
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/pundir8372/Backend-With-Sahil.git .
+            else
+              git fetch origin
+              git checkout -B ${GITHUB_REF#refs/heads/} origin/${GITHUB_REF#refs/heads/}
+              git reset --hard origin/${GITHUB_REF#refs/heads/}
+            fi
+
+            npm ci --production
+
+            pm2 reload node-app || pm2 start app.js --name node-app
+            pm2 save
