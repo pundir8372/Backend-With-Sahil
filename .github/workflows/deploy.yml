@@ -39,8 +39,8 @@ jobs:
               git clone https://github.com/pundir8372/Backend-With-Sahil.git .
             else
               git fetch origin
-              git checkout -B ${GITHUB_REF#refs/heads/} origin/${GITHUB_REF#refs/heads/}
-              git reset --hard origin/${GITHUB_REF#refs/heads/}
+              git checkout ci-cd-demo
+              git reset --hard origin/ci-cd-demo
             fi
 
 
