@@ -34,13 +34,17 @@ jobs:
             mkdir -p /var/www/backend
             cd /var/www/backend
 
+            BRANCH="${GITHUB_REF_NAME}"
+
             # Clone the repo
             if [ ! -d ".git" ]; then
               git clone https://github.com/pundir8372/Backend-With-Sahil.git .
             else
               git fetch origin
-              git checkout ci-cd-demo
-              git reset --hard origin/ci-cd-demo
+            #  git checkout ci-cd-demo
+              git checkout "$BRANCH"
+            #   git reset --hard origin/ci-cd-demo
+              git reset --hard "origin/$BRANCH"
             fi
 
 
