@@ -43,6 +43,9 @@ jobs:
               git reset --hard origin/${GITHUB_REF#refs/heads/}
             fi
 
+
+            
+
             npm ci --production
 
             pm2 reload node-app || pm2 start app.js --name node-app

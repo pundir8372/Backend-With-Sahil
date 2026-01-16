@@ -12,7 +12,7 @@ app.get("/twitter" , (req,res)=>{
 })
 
 app.get("/login",(req,res)=>{
-  req.send('<h1>Welcome to login Page</h1>')
+  res.send('<h1>Welcome to login Page</h1>')
 })
 
 app.listen(process.env.port,()=>{
