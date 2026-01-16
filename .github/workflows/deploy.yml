@@ -29,12 +29,13 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          envs: GITHUB_REF_NAME
           script: |
 
             mkdir -p /var/www/backend
             cd /var/www/backend
 
-            BRANCH="${GITHUB_REF_NAME}"
+            
 
             # Clone the repo
             if [ ! -d ".git" ]; then
@@ -42,9 +43,9 @@ jobs:
             else
               git fetch origin
             #  git checkout ci-cd-demo
-              git checkout "$BRANCH"
+              git checkout "$GITHUB_REF_NAME"
             #   git reset --hard origin/ci-cd-demo
-              git reset --hard "origin/$BRANCH"
+              git reset --hard "origin/$GITHUB_REF_NAME"
             fi
 
 
