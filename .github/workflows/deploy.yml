@@ -44,9 +44,14 @@ jobs:
             fi
 
 
-            
+
+            # Create .env from GitHub Secrets
+            echo "PORT_VALUE=${{ secrets.PORT_VALUE }}" > .env
+
+
+
 
             npm ci --production
 
-            pm2 reload node-app || pm2 start app.js --name node-app
+            pm2 reload backend || pm2 start app.js --name backend
             pm2 save
